@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'No eres miembro',
+                      'No eres un miembro',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
