@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'credentials_page.dart';
 import 'login_page.dart';
@@ -11,7 +14,71 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  var name, surnames, phone, purse, email, password, referred;
   final formKey = GlobalKey<FormState>();
+  //controladores
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _celController = TextEditingController();
+  final _purseController = TextEditingController();
+  final _referredController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _nameController.dispose();
+    _lastnameController.dispose();
+    _celController.dispose();
+    _purseController.dispose();
+    _referredController.dispose();
+    super.dispose();
+  }
+
+  Future signUp() async {
+    if (passwordConfirmed()) {
+      //crear usuario
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      //agregar detalles del usuario
+      addUsersDetails(
+        _nameController.text.trim(),
+        _lastnameController.text.trim(),
+        _emailController.text.trim(),
+        _purseController.text.trim(),
+        _referredController.text.trim(),
+        int.parse(_celController.text.trim()),
+      );
+    }
+  }
+
+  Future addUsersDetails(
+      String name, String lastName, String email, String purse, String referred, int phone) async {
+    await FirebaseFirestore.instance.collection('Users').add({
+      'name': name,
+      'lastname': lastName,
+      'phone': phone,
+      'purse': purse,
+      'email': email,
+      'referred': referred,      
+    });
+  }
+
+  bool passwordConfirmed() {
+    if (_passwordController.text.trim() ==
+        _confirmPasswordController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_outlined),
-            onPressed: () => const LoginPage(),
+            onPressed: () {},
           )),
       backgroundColor: Colors.blueGrey,
       body: Container(
@@ -56,10 +123,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        onChanged: (val) {
+                          name = val;
+                        },
+                        controller: _nameController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Nombres',
                         ),
@@ -79,10 +150,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        onChanged: (val) {
+                          surnames = val;
+                        },
+                        controller: _lastnameController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Apellidos',
                         ),
@@ -93,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                //edad usuario
+                //telefono usuario
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
@@ -102,10 +177,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        onChanged: (val) {
+                          phone = val;
+                        },
+                        controller: _celController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Telefono',
                         ),
@@ -116,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                //correo electronico usuario
+                //monedero electronico usuario
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
@@ -125,10 +204,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        onChanged: (val) {
+                          purse = val;
+                        },
+                        controller: _purseController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Monedero virtual',
                         ),
@@ -148,10 +231,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        decoration: InputDecoration(
+                        onChanged: (val) {
+                          email = val;
+                        },
+                        controller: _emailController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Correo Electronico',
                         ),
@@ -171,37 +258,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
+                        onChanged: (val) {
+                          password = val;
+                        },
+                        controller: _passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Contraseña',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                // confirmar contraseña usuario
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Confirmar Contraseña',
                         ),
                       ),
                     ),
@@ -219,11 +286,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
+                        onChanged: (val) {
+                          referred = val;
+                        },
+                        controller: _referredController,
+                        obscureText: false,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Codigo de referido',
                         ),
@@ -232,22 +303,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
                 //boton para iniciar sesion
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const Credentialscreen();
-                          },
-                        ),
-                      );
-                    },
+                    onTap: signUp,
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(

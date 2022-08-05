@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trading/profile/question.dart';
 
 class PaymentProfile extends StatefulWidget {
   const PaymentProfile({Key? key}) : super(key: key);
@@ -27,6 +28,130 @@ class _PaymentProfileState extends State<PaymentProfile> {
           const SizedBox(
             height: 15.0,
           ),
+          //boton pago usdt
+          Column(
+            children: [
+              Material(
+                color: Colors.transparent,
+                elevation: 0,
+                borderRadius: BorderRadius.circular(10),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return QuestionPage();
+                        },
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: Colors.black38, width: 4.1),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Image.asset(
+                            'assets/usdt.png',
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                            width: 15,
+                          ),
+                          const Text(
+                            'Usdt',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15.0,
+          ),
+          //boton pago binance
+          Column(
+            children: [
+              Material(
+                color: Colors.transparent,
+                elevation: 0,
+                borderRadius: BorderRadius.circular(10),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return QuestionPage();
+                        },
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: Colors.black38, width: 4.1),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Image.asset(
+                            'assets/binance.png',
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                            width: 15,
+                          ),
+                          const Text(
+                            'Binance',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15.0,
+          ),
           //boton pago paypal
           Column(
             children: [
@@ -37,7 +162,16 @@ class _PaymentProfileState extends State<PaymentProfile> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: InkWell(
                   splashColor: Colors.transparent,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return QuestionPage();
+                        },
+                      ),
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.transparent,

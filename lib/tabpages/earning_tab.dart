@@ -39,7 +39,7 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
   final realController = TextEditingController();
   final dollarController = TextEditingController();
   final euroController = TextEditingController();
-  final britishController = TextEditingController();
+  //final britishController = TextEditingController();
   final bitcoinController = TextEditingController();
 
   late double dollar;
@@ -51,7 +51,7 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
     realController.text = '';
     dollarController.text = '';
     euroController.text = '';
-    britishController.text = '';
+    // britishController.text = '';
     bitcoinController.text = '';
   }
 
@@ -64,8 +64,8 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
     var real = double.parse(text);
     dollarController.text = (real / dollar).toStringAsFixed(2);
     euroController.text = (real / euro).toStringAsFixed(2);
-    britishController.text = (real / british).toStringAsFixed(2);
-    bitcoinController.text = (real / bitcoin).toStringAsFixed(5);
+    // britishController.text = (real / british).toStringAsFixed(2);
+    bitcoinController.text = (real / bitcoin).toStringAsFixed(2);
   }
 
   void _dollarChanged(String text) {
@@ -77,10 +77,10 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
     var dollar = double.parse(text);
     realController.text = (dollar * this.dollar).toStringAsFixed(2);
     euroController.text = (dollar * this.dollar / euro).toStringAsFixed(2);
-    britishController.text =
-        (dollar * this.dollar / british).toStringAsFixed(2);
+    //britishController.text =
+    (dollar * this.dollar / british).toStringAsFixed(2);
     bitcoinController.text =
-        (dollar * this.dollar / bitcoin).toStringAsFixed(5);
+        (dollar * this.dollar / bitcoin).toStringAsFixed(2);
   }
 
   void _euroChanged(String text) {
@@ -92,8 +92,8 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
     var euro = double.parse(text);
     realController.text = (euro * this.euro).toStringAsFixed(2);
     dollarController.text = (euro * this.euro / dollar).toStringAsFixed(2);
-    britishController.text = (euro * this.euro / british).toStringAsFixed(2);
-    bitcoinController.text = (euro * this.euro / bitcoin).toStringAsFixed(5);
+    //britishController.text = (euro * this.euro / british).toStringAsFixed(2);
+    bitcoinController.text = (euro * this.euro / bitcoin).toStringAsFixed(2);
   }
 
   void _britishChanged(String text) {
@@ -122,8 +122,8 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
     dollarController.text =
         (bitcoin * this.bitcoin / dollar).toStringAsFixed(2);
     euroController.text = (bitcoin * this.bitcoin / euro).toStringAsFixed(2);
-    britishController.text =
-        (bitcoin * this.bitcoin / british).toStringAsFixed(2);
+    // britishController.text =
+    (bitcoin * this.bitcoin / british).toStringAsFixed(2);
   }
 
   static const _goldenColor = Color(0xFFFFD700);
@@ -186,7 +186,7 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                     british =
                         snapshot.data?['results']['currencies']['GBP']['buy'];
                     bitcoin =
-                        snapshot.data?['results']['currencies']['BTC']['buy'];
+                        snapshot.data?['results']['currencies']['USD']['buy'];
                     return SingleChildScrollView(
                         child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -203,7 +203,7 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                               endIndent: 60),
                           const Divider(),
                           buildTextField(
-                              'Real', 'R\$ ', realController, _realChanged),
+                              'Ethereum', ' ', realController, _realChanged),
                           const Divider(),
                           buildTextField('Dollar', '\$ ', dollarController,
                               _dollarChanged),
@@ -211,11 +211,8 @@ class _EarningsTabPageState extends State<EarningsTabPage> {
                           buildTextField(
                               'Euro', '€ ', euroController, _euroChanged),
                           const Divider(),
-                          buildTextField('Pound Sterling', '£ ',
-                              britishController, _britishChanged),
-                          const Divider(),
-                          buildTextField('Bitcoin', '₿ ', bitcoinController,
-                              _bitcoinChanged),
+                          buildTextField(
+                              'Usdt', '\$ ', bitcoinController, _dollarChanged),
                         ],
                       ),
                     ));

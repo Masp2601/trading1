@@ -82,7 +82,7 @@ class _ReatingTabPageState extends State<ReatingTabPage> {
                         ),
                         child: const Center(
                           child: Text(
-                            'Ver Acciones',
+                            'Transacciones',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

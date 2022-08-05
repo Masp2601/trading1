@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trading/authentication/login_page.dart';
 import 'package:trading/pages/next_page.dart';
 import 'package:trading/authentication/register_page.dart';
 
@@ -10,6 +12,18 @@ class LandPage extends StatefulWidget {
 }
 
 class _LandPageState extends State<LandPage> {
+  late SharedPreferences sharedPreferences;
+
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (BuildContext context) => const LoginPage()),
+          (Route<dynamic> route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

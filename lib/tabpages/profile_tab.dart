@@ -5,8 +5,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trading/profile/account.dart';
 import 'package:trading/profile/language.dart';
 import 'package:trading/profile/payment.dart';
+import 'package:trading/profile/question.dart';
 import 'package:trading/profile/referral.dart';
 import 'package:trading/profile/settings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileTabPage extends StatefulWidget {
   const ProfileTabPage({Key? key}) : super(key: key);
@@ -18,6 +20,8 @@ class ProfileTabPage extends StatefulWidget {
 class _ProfileTabPageState extends State<ProfileTabPage> {
   @override
   Widget build(BuildContext context) {
+    const _url = 'https://api.whatsapp.com/send?phone=573163213514';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -343,7 +347,16 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
                         color: Colors.white24, // button color
                         child: InkWell(
                           splashColor: Colors.transparent, // splash color
-                          onTap: () {}, // button pressed
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return QuestionPage();
+                                },
+                              ),
+                            );
+                          }, // button pressed
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
@@ -364,7 +377,16 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
                         fontWeight: FontWeight.normal,
                         color: Colors.black),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return QuestionPage();
+                        },
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(
                   width: 100.0,
@@ -379,7 +401,11 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () async {
+                  if (await canLaunch(_url)) {
+                    await launch(_url, forceSafariVC: false);
+                  }
+                },
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(

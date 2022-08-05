@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "839717486303",
+    "project_id": "ecuatrading12",
+    "storage_bucket": "ecuatrading12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839717486303:android:c8ee2af24ba9c597bab36a",
+        "android_client_info": {
+          "package_name": "com.trading.masp.trading"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839717486303-li2vbmsf2dc0je3co9n61k38ar78mlnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYguXQYcB_ntch7BEVRcaDiSZ91jrUqJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839717486303-li2vbmsf2dc0je3co9n61k38ar78mlnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

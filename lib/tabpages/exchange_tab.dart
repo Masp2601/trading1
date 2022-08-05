@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trading/profile/payment.dart';
+import 'package:trading/tabpages/reating_tab.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:web3dart/contracts.dart';
 
 class ExchangeTabPage extends StatefulWidget {
   const ExchangeTabPage({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class ExchangeTabPage extends StatefulWidget {
 class _ExchangeTabPageState extends State<ExchangeTabPage> {
   bool data = false;
   int myAmount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +72,16 @@ class _ExchangeTabPageState extends State<ExchangeTabPage> {
             HStack(
               [
                 TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const ExchangeTabPage();
+                          },
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       primary: Colors.teal,
                       backgroundColor: Colors.orange,
@@ -83,7 +94,16 @@ class _ExchangeTabPageState extends State<ExchangeTabPage> {
                     ),
                     label: "Refrescar".text.white.make().h(20)),
                 TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const PaymentProfile();
+                          },
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       primary: Colors.teal,
                       backgroundColor: Colors.green,
@@ -96,7 +116,16 @@ class _ExchangeTabPageState extends State<ExchangeTabPage> {
                     ),
                     label: "Comprar".text.white.make().h(20)),
                 TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const ReatingTabPage();
+                          },
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       primary: Colors.teal,
                       backgroundColor: Colors.red,
