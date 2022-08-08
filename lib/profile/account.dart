@@ -135,7 +135,7 @@ class _AccountProfileState extends State<AccountProfile> {
                               fit: BoxFit.cover,
                             )
                           : Image.network(
-                              'https://upload.wikimedia.org/wikipedia/commons/5/5f/Alberto_conversi_profile_pic.jpg',
+                              'https://firebasestorage.googleapis.com/v0/b/ecuatrading12.appspot.com/o/perfil.png?alt=media&token=60854acc-2a36-4518-9942-f5c883a4fe2f',
                               width: 170,
                               height: 170,
                               fit: BoxFit.cover,

@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trading/global/global.dart';
+import 'package:trading/widgets/progress_dialog.dart';
 
 import 'credentials_page.dart';
 import 'login_page.dart';
@@ -19,63 +22,76 @@ class _RegisterPageState extends State<RegisterPage> {
   //controladores
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
   final _nameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _celController = TextEditingController();
   final _purseController = TextEditingController();
   final _referredController = TextEditingController();
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    _nameController.dispose();
-    _lastnameController.dispose();
-    _celController.dispose();
-    _purseController.dispose();
-    _referredController.dispose();
-    super.dispose();
-  }
-
-  Future signUp() async {
-    if (passwordConfirmed()) {
-      //crear usuario
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      //agregar detalles del usuario
-      addUsersDetails(
-        _nameController.text.trim(),
-        _lastnameController.text.trim(),
-        _emailController.text.trim(),
-        _purseController.text.trim(),
-        _referredController.text.trim(),
-        int.parse(_celController.text.trim()),
-      );
+  validateForm() {
+    if (_nameController.text.length < 3) {
+      Fluttertoast.showToast(
+          msg: "El nombre debe tener mas de tres caracteres");
+    } else if (!_emailController.text.contains("@")) {
+      Fluttertoast.showToast(msg: "El correo electronico no es valido...");
+    } else if (_celController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "El numero de telefono es requerido.");
+    } else if (_passwordController.text.length < 6) {
+      Fluttertoast.showToast(
+          msg: "La contraseña no puede ser menor a seis caracteres");
+    } else if (_lastnameController.text.length < 3) {
+      Fluttertoast.showToast(
+          msg: "El apellido no puede ser menor a tres caracteres");
+    } else if (_purseController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "El monedero es requerido.");
+    } else {
+      saveInforNow();
     }
   }
 
-  Future addUsersDetails(
-      String name, String lastName, String email, String purse, String referred, int phone) async {
-    await FirebaseFirestore.instance.collection('Users').add({
-      'name': name,
-      'lastname': lastName,
-      'phone': phone,
-      'purse': purse,
-      'email': email,
-      'referred': referred,      
-    });
-  }
+  saveInforNow() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext c) {
+          return ProgressDialog(
+            message: "Procesando, Por favor espere...",
+          );
+        });
 
-  bool passwordConfirmed() {
-    if (_passwordController.text.trim() ==
-        _confirmPasswordController.text.trim()) {
-      return true;
+    final User? firebaseUser = (await fAuth
+            .createUserWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    )
+            .catchError((msg) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error: " + msg.toString());
+    }))
+        .user;
+
+    if (firebaseUser != null) {
+      Map driverMap = {
+        "id": firebaseUser.uid,
+        "name": _nameController.text.trim(),
+        "lastname": _lastnameController.text.trim(),
+        "phone": _celController.text.trim(),
+        "email": _emailController.text.trim(),
+        "password": _passwordController.text.trim(),
+        "purse": _purseController.text.trim(),
+        "refered": _referredController.text.trim(),
+      };
+
+      DatabaseReference driverRef =
+          FirebaseDatabase.instance.ref().child("Usuarios");
+      driverRef.child(firebaseUser.uid).set(driverMap);
+
+      currentFirebaseUser = firebaseUser;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (c) => Credentialscreen()));
     } else {
-      return false;
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "La cuenta no se a creado...");
     }
   }
 
@@ -309,7 +325,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: signUp,
+                    onTap: () {
+                      validateForm();
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(

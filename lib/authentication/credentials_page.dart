@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trading/authentication/login_page.dart';
 import 'package:trading/authentication/register_page.dart';
@@ -431,6 +432,7 @@ class _CredentialscreenState extends State<Credentialscreen> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  Fluttertoast.showToast(msg: "La cuenta se a creado...");
                   Navigator.push(context,
                       MaterialPageRoute(builder: (c) => const LoginPage()));
                 },

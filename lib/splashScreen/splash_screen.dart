@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:trading/pages/land_page.dart';
+
+import '../pages/next_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class SplashScreen extends StatelessWidget {
           children: [
             Expanded(child: Image.asset('assets/logo.png')),
             const Text(
-              'TRADING APP',
+              'EcuaTrading12',
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -23,6 +24,6 @@ class SplashScreen extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.blueGrey,
-        nextScreen: const LandPage());
+        nextScreen: const NextPage());
   }
 }

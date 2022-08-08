@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trading/authentication/forgot_pw_page.dart';
 import 'package:trading/authentication/register_page.dart';
+
+import '../global/global.dart';
+import '../mainscreen/main_screen.dart';
+import '../widgets/progress_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,17 +18,46 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim());
+
+  validateForm() {
+    if (!emailController.text.contains("@")) {
+      Fluttertoast.showToast(msg: "El correo electronico no es valido...");
+    } else if (passwordController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Contraseña es requerida...");
+    } else {
+      loginUser();
+    }
   }
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
+  loginUser() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext c) {
+          return ProgressDialog(
+            message: "Procesando, Por favor espere...",
+          );
+        });
+
+    final User? firebaseUser = (await fAuth
+            .signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    )
+            .catchError((msg) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error: " + msg.toString());
+    }))
+        .user;
+
+    if (firebaseUser != null) {
+      currentFirebaseUser = firebaseUser;
+      Fluttertoast.showToast(msg: "Inicio de sesion exitoso...");
+      Navigator.push(context, MaterialPageRoute(builder: (c) => MainScreen()));
+    } else {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Un error ocurrio al loguearse...");
+    }
   }
 
   @override
@@ -146,7 +180,9 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: signIn,
+                    onTap: () {
+                      validateForm();
+                    },
                     //onTap: signIn,
                     child: Container(
                       padding: const EdgeInsets.all(20),

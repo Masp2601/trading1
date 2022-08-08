@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trading/global/global.dart';
 import 'package:trading/pages/contact_page.dart';
+
+import '../splashScreen/splash_screen.dart';
 
 class SettingsProfile extends StatefulWidget {
   const SettingsProfile({Key? key}) : super(key: key);
@@ -90,7 +93,11 @@ class _SettingsProfileState extends State<SettingsProfile> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: GestureDetector(
-              onTap: () => FirebaseAuth.instance.signOut(),
+              onTap: () {
+                fAuth.signOut();
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (c) => SplashScreen()));
+              },
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
