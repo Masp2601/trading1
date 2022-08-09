@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (firebaseUser != null) {
       currentFirebaseUser = firebaseUser;
-      Fluttertoast.showToast(msg: "Inicio de sesion exitoso...");
+      Fluttertoast.showToast(msg: "Inicio sesion exitoso...");
       Navigator.push(context, MaterialPageRoute(builder: (c) => MainScreen()));
     } else {
       Navigator.pop(context);
