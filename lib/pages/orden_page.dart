@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OrdenesPage extends StatefulWidget {
   const OrdenesPage({Key? key}) : super(key: key);
@@ -9,6 +12,69 @@ class OrdenesPage extends StatefulWidget {
 }
 
 class _OrdenesPageState extends State<OrdenesPage> {
+  File? file;
+  ImagePicker image = ImagePicker();
+  String url = "";
+  String? name;
+  var color1 = Colors.redAccent[700];
+  String? imageDpiAnverso;
+  //Recibo
+  getImage() async {
+    var img = await image.pickImage(source: ImageSource.camera);
+    setState(() {
+      file = File(img!.path);
+    });
+    if (file != null) {
+      //uploadFileA();
+    }
+  }
+
+  opcionesAnverso(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Seleccione una opcion:'),
+            contentPadding: const EdgeInsets.all(0),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      getImage();
+                    },
+                    splashColor: Colors.orange,
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(width: 1, color: Colors.grey))),
+                      child: Row(
+                        children: const [
+                          Expanded(
+                            child: Text(
+                              'Tomar una foto',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.camera_alt_outlined,
+                            color: Colors.orange,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   final controllerTo = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -38,7 +104,7 @@ class _OrdenesPageState extends State<OrdenesPage> {
                 height: 35,
               ),
               const Text(
-                "Comprobante de Pago:",
+                "Captura Solicitar Retiro:",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -47,19 +113,22 @@ class _OrdenesPageState extends State<OrdenesPage> {
               const SizedBox(
                 height: 45,
               ),
-              Row(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(
                     width: 95,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    alignment: Alignment.center,
+                    onPressed: () {
+                      opcionesAnverso(context);
+                    },
                     icon: const Icon(
-                      Iconsax.attach_circle,
-                      size: 25,
+                      Iconsax.camera,
+                      size: 45,
                     ),
                   ),
-                  const Text("Adjuntar Archivo")
                 ],
               ),
               const SizedBox(

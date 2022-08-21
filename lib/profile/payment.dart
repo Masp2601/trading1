@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trading/pages/bnbsmart_page.dart';
 import 'package:trading/profile/question.dart';
+
+import '../pages/ethereum_page.dart';
+import '../pages/usdt_page.dart';
 
 class PaymentProfile extends StatefulWidget {
   const PaymentProfile({Key? key}) : super(key: key);
@@ -43,7 +47,7 @@ class _PaymentProfileState extends State<PaymentProfile> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return QuestionPage();
+                          return UsdtPage();
                         },
                       ),
                     );
@@ -90,7 +94,7 @@ class _PaymentProfileState extends State<PaymentProfile> {
           const SizedBox(
             height: 15.0,
           ),
-          //boton pago binance
+          //boton pago ethereum
           Column(
             children: [
               Material(
@@ -105,7 +109,69 @@ class _PaymentProfileState extends State<PaymentProfile> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return QuestionPage();
+                          return EthhereumPage();
+                        },
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: Colors.black38, width: 4.1),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Image.asset(
+                            'assets/ethereum.png',
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.fill,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                            width: 15,
+                          ),
+                          const Text(
+                            'Ethereum',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15.0,
+          ),
+          //boton pago bnb
+          Column(
+            children: [
+              Material(
+                color: Colors.transparent,
+                elevation: 0,
+                borderRadius: BorderRadius.circular(10),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return BnbPage();
                         },
                       ),
                     );
@@ -135,69 +201,7 @@ class _PaymentProfileState extends State<PaymentProfile> {
                             width: 15,
                           ),
                           const Text(
-                            'Binance',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15.0,
-          ),
-          //boton pago paypal
-          Column(
-            children: [
-              Material(
-                color: Colors.transparent,
-                elevation: 0,
-                borderRadius: BorderRadius.circular(10),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return QuestionPage();
-                        },
-                      ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(color: Colors.black38, width: 4.1),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Image.asset(
-                            'assets/paypal.png',
-                            height: 40,
-                            width: 40,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                            width: 15,
-                          ),
-                          const Text(
-                            'PayPal',
+                            'BNB Smart Chain',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,

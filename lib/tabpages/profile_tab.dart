@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:trading/profile/account.dart';
 import 'package:trading/profile/language.dart';
 import 'package:trading/profile/payment.dart';
+import 'package:trading/profile/profile.dart';
 import 'package:trading/profile/question.dart';
 import 'package:trading/profile/referral.dart';
 import 'package:trading/profile/settings.dart';
@@ -135,7 +136,7 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const AccountProfile();
+                          return const ProfilePage();
                         },
                       ),
                     );

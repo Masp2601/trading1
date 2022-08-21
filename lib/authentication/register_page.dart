@@ -7,7 +7,6 @@ import 'package:trading/global/global.dart';
 import 'package:trading/widgets/progress_dialog.dart';
 
 import 'credentials_page.dart';
-import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

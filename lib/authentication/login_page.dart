@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:trading/authentication/forgot_pw_page.dart';
 import 'package:trading/authentication/register_page.dart';
 
@@ -18,6 +19,18 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  late LocalAuthentication _localAth;
+  bool _isBiometricAvailable = false;
+
+  void initState() {
+    super.initState();
+    _localAth = LocalAuthentication();
+    _localAth.canCheckBiometrics.then((b) {
+      setState(() {
+        _isBiometricAvailable = b;
+      });
+    });
+  }
 
   validateForm() {
     if (!emailController.text.contains("@")) {
@@ -190,14 +203,19 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Center(
-                        child: Text(
-                          'Iniciar Sesion',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Iniciar Sesion',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

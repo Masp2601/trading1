@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trading/pages/listorden_page.dart';
 import 'package:trading/pages/orden_page.dart';
 import 'package:trading/tabpages/home_tab.dart';
 
@@ -69,7 +70,7 @@ class _ReatingTabPageState extends State<ReatingTabPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const HomeTabPage();
+                              return const OrdenListPage();
                             },
                           ),
                         );
@@ -82,7 +83,7 @@ class _ReatingTabPageState extends State<ReatingTabPage> {
                         ),
                         child: const Center(
                           child: Text(
-                            'Transacciones',
+                            'Estado Orden',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

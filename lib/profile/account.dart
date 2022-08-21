@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,6 +13,36 @@ class AccountProfile extends StatefulWidget {
 }
 
 class _AccountProfileState extends State<AccountProfile> {
+  var name, surnames, phone, purse, email, password, referred;
+  final formKey = GlobalKey<FormState>();
+  //controladores
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _celController = TextEditingController();
+  final _purseController = TextEditingController();
+  validateForm() {
+    if (_nameController.text.length < 3) {
+      Fluttertoast.showToast(
+          msg: "El nombre debe tener mas de tres caracteres");
+    } else if (!_emailController.text.contains("@")) {
+      Fluttertoast.showToast(msg: "El correo electronico no es valido...");
+    } else if (_celController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "El numero de telefono es requerido.");
+    } else if (_passwordController.text.length < 6) {
+      Fluttertoast.showToast(
+          msg: "La contraseña no puede ser menor a seis caracteres");
+    } else if (_lastnameController.text.length < 3) {
+      Fluttertoast.showToast(
+          msg: "El apellido no puede ser menor a tres caracteres");
+    } else if (_purseController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "El monedero es requerido.");
+    } else {
+      //saveInforNow();
+    }
+  }
+
   File? pickedImage;
   void imagePickerOption() {
     Get.bottomSheet(
@@ -341,7 +372,9 @@ class _AccountProfileState extends State<AccountProfile> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  validateForm();
+                },
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
